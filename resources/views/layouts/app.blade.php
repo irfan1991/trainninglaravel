@@ -45,7 +45,14 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         <li class="nav-item" ><a class="nav-link" href="{{ url('/home')}}">Home</a></li>
-                        
+                    
+                    @role(('admin'))
+                    <li class="nav-item" ><a class="nav-link" href="{{ url('/book')}}">Book</a></li>
+                    <li class="nav-item" ><a class="nav-link" href="{{ url('/author')}}">Author</a> </li>
+                    <li class="nav-item" ><a class="nav-link" href="{{ url('/user')}}">Member</a> </li>
+                      <li class="nav-item" ><a class="nav-link" href="{{ url('/borrow')}}">Data Peminjaman</a> </li>
+                    @endrole
+
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -58,7 +65,8 @@
                                 </li>
                             @endif
                         @else
-                        <li class="nav-item" ><a class="nav-link" href="{{ url('/book')}}">Book</a></li>
+                        {{-- <li class="nav-item" ><a class="nav-link" href="{{ url('/book')}}">Book</a></li>
+                          <li class="nav-item" ><a class="nav-link" href="{{ url('/author')}}">Author</a> </li> --}}
 
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

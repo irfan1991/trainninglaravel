@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/test', function () {
     return view('test');
@@ -22,4 +22,19 @@ Route::get('/test', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['middleware'=>['auth', 'role:admin']], function(){
 Route::resource('/book', 'BookController');
+Route::resource('/author', 'AuthorController');
+Route::resource('/user', 'UserController') ;
+Route::resource('/borrow', 'BorrowLogController') ;
+Route::get('kembalian/{borrow}', 'BorrowLogController@updateKembalian')->name('borrow.kembalian');
+
+});
+
+Route::get('/', 'GuestController@index')->name('guest');
+Route::get('book/{book}/borrow',
+	['middleware' =>['auth', 'role:member'],
+	'as' => 'book.borrow',
+	'uses' => 'BookController@borrow'
+	]);

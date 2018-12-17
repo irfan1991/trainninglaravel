@@ -14,9 +14,12 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        //
+        $authors = Author::all();
+        $no = 1;
+        return view('author.index', compact('authors','no'));
     }
 
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -24,7 +27,7 @@ class AuthorController extends Controller
      */
     public function create()
     {
-        //
+        return view('author.create');
     }
 
     /**
@@ -35,16 +38,31 @@ class AuthorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            
+        ]);
+
+        $author = new Author([
+                'name' => $request->get('name'),
+               
+        ]);
+
+        $author->save();
+      //  return redirect('/shares/create');
+
+        return redirect('/author')->with('succes', 'Author data has been added');
+
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Author  $author
+     * @param  \App\Share  $share
      * @return \Illuminate\Http\Response
      */
-    public function show(Author $author)
+    public function show(Share $share)
     {
         //
     }
@@ -52,34 +70,42 @@ class AuthorController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Author  $author
+     * @param  \App\Share  $share
      * @return \Illuminate\Http\Response
      */
-    public function edit(Author $author)
+    public function edit($id)
     {
-        //
+
+        $author = Author::find($id);
+        return view('author.edit', compact('author'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Author  $author
+     * @param  \App\Share  $share
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Author $author)
+    public function update(Request $request, $id)
     {
-        //
+         $request->validate([
+            'name' => 'required',
+           
+        ]);
+
+        $author = Author::find($id);
+        $author->name = $request->get('name');
+        $author->save();
+      
+        return redirect('/author')->with('succes', 'Author data has been updated');
+
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Author  $author
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Author $author)
+    public function destroy($id)
     {
-        //
-    }
-}
+        $author = Author::find($id);
+        $author->delete();
+         return redirect('/author')->with('succes', 'Author data has been deleted');
+    }}

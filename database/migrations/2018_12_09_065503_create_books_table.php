@@ -19,6 +19,7 @@ class CreateBooksTable extends Migration
             $table->integer('author_id')->unsigned();
             $table->integer('amount')->unsigned();
             $table->string('cover')->nullable();
+            $table->integer('is_borrow')->nullable();
             $table->timestamps();
         });
     }
