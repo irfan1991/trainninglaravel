@@ -22,7 +22,7 @@ class BorrowLogController extends Controller
             ->join('users', 'users.id', '=', 'borrow_logs.user_id')
             
             ->select('borrow_logs.id as id','borrow_logs.is_returned as is_returned','books.cover as cover','books.title as title','users.name as name', 'books.amount as amount' )
-            // borrow_logs.is_returned as is_returned, books.cover as cover, books.title as title, users.name as name ')
+           
             ->get();
 
         //var_dump($books);die();
